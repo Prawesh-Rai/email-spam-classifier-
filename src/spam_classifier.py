@@ -3,8 +3,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Load dataset
+import os
+
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+dataset_path = os.path.join(base_dir, "data", "SMSSpamCollection")
+
 df = pd.read_csv(
-    "data/SMSSpamCollection",
+    dataset_path,
     sep="\t",
     header=None,
     names=["label", "message"]
