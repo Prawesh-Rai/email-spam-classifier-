@@ -127,12 +127,12 @@ os.makedirs(
     exist_ok=True
 )
 
-pickle.dump(
-    model,
-    open(
-        os.path.join(base_dir, "models", "spam_model.pkl"),
-        "wb"
-    )
-)
+# Save model
+with open(os.path.join(base_dir, "models", "spam_model.pkl"), "wb") as f:
+    pickle.dump(model, f)
 
-print("Model saved successfully!")
+# Save TF-IDF vectorizer
+with open(os.path.join(base_dir, "models", "vectorizer.pkl"), "wb") as f:
+    pickle.dump(vectorizer, f)
+
+print("Model and vectorizer saved successfully!")
