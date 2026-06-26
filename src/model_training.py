@@ -102,8 +102,11 @@ model.fit(X_train, y_train)
 
 print("\n----- Logistic Regression Comparison -----")
 
-lr_model = LogisticRegression(max_iter=1000)
-
+lr_model = LogisticRegression(
+    max_iter=1000,
+    class_weight="balanced",
+    random_state=42
+)
 lr_model.fit(X_train, y_train)
 
 lr_pred = lr_model.predict(X_test)
