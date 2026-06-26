@@ -67,3 +67,12 @@ X_train, X_test, y_train, y_test = train_test_split(
 print("Training samples:", len(X_train))
 print("Testing samples:", len(X_test))
 print(df.head())
+
+print("\nClass Distribution:")
+print(df["label"].value_counts())
+
+spam_percentage = (df["label"].sum() / len(df)) * 100
+ham_percentage = 100 - spam_percentage
+
+print(f"\nSpam Emails: {spam_percentage:.2f}%")
+print(f"Ham Emails: {ham_percentage:.2f}%")
