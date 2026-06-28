@@ -3,9 +3,12 @@ import string
 import nltk
 
 from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 from sklearn.model_selection import train_test_split
 
 nltk.download("stopwords")
+nltk.download("punkt")
+nltk.download("punkt_tab")
 
 # Load dataset
 import os
@@ -36,7 +39,7 @@ def clean_text(text):
         if char not in string.punctuation
     )
 
-    words = text.split()
+    words = word_tokenize(text)
 
     words = [
         word for word in words
@@ -48,7 +51,7 @@ def clean_text(text):
 df["message"] = df["message"].apply(clean_text)
 
 # Tokenization
-df["tokens"] = df["message"].apply(lambda x: x.split())
+df["tokens"] = df["message"].apply(word_tokenize)
 
 # Convert labels
 df["label"] = df["label"].map({
@@ -61,7 +64,8 @@ X_train, X_test, y_train, y_test = train_test_split(
     df["message"],
     df["label"],
     test_size=0.2,
-    random_state=42
+    random_state=42,
+    stratify=df["label"]
 )
 
 print("Training samples:", len(X_train))

@@ -1,16 +1,53 @@
 import pandas as pd
+import os
+import string
+import nltk
+
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 
-# Load dataset
+nltk.download("stopwords")
+nltk.download("punkt")
+nltk.download("punkt_tab")
+
+dataset_path = os.path.join(
+    os.path.dirname(__file__),
+    "..",
+    "data",
+    "SMSSpamCollection"
+)
+
 df = pd.read_csv(
-    "data/SMSSpamCollection",
+    dataset_path,
     sep="\t",
     header=None,
     names=["label", "message"]
 )
+
+df["message"] = df["message"].str.lower()
+
+stop_words = set(stopwords.words("english"))
+
+def clean_text(text):
+    text = "".join(
+        ch for ch in text
+        if ch not in string.punctuation
+    )
+
+    words = word_tokenize(text)
+
+    words = [
+        word for word in words
+        if word not in stop_words
+    ]
+
+    return " ".join(words)
+
+df["message"] = df["message"].apply(clean_text)
 
 # Convert labels to numbers
 df["label"] = df["label"].map({"ham": 0, "spam": 1})
@@ -45,7 +82,8 @@ X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
     test_size=0.2,
-    random_state=42
+    random_state=42,
+    stratify=y
 )
 
 print("\nTraining Shape:")
