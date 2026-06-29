@@ -1,71 +1,66 @@
 # Email Spam Classifier using Machine Learning
 
 ## Project Overview
-This project demonstrates an Email Spam Classification System using Machine Learning. The model classifies incoming email messages as either **Spam** or **Not Spam** by applying Natural Language Processing (NLP) techniques and supervised learning algorithms.
 
-## Dataset
-The project uses the SMS Spam Collection dataset containing **5,572** messages with the following information:
+This project is a Machine Learning-based Email Spam Classifier developed using Python and Scikit-learn. It classifies emails as **Spam** or **Not Spam** using Natural Language Processing (NLP) techniques and a Logistic Regression model with TF-IDF feature extraction. The project also includes a Flask web application for real-time email spam prediction.
 
-- Message Text
-- Label (Spam / Ham)
-
-### Dataset Statistics
-- Total Messages: 5,572
-- Ham Messages: 4,825
-- Spam Messages: 747
-- Spam Percentage: 13.41%
-
-## Technologies Used
-- Python
-- Pandas
-- NumPy
-- NLTK
-- Scikit-learn
-- TF-IDF Vectorizer
-- Pickle
-- Git & GitHub
-
-## Machine Learning Models
-- Multinomial Naive Bayes
-- Logistic Regression
-
-## Project Workflow
-1. Data Loading
-2. Data Cleaning
-3. Text Preprocessing
-4. Stopword Removal
-5. TF-IDF Feature Extraction
-6. Train-Test Split
-7. Hyperparameter Tuning
-8. Model Training
-9. Model Evaluation
-10. Cross Validation
-11. Model Comparison
-12. Model Deployment
-13. Model Serialization
-
-## Results
-
-### Multinomial Naive Bayes
-- Accuracy: **98.03%**
-- Best Alpha: **0.1**
-- Cross Validation Accuracy: **98.03%**
-
-### Logistic Regression
-- Accuracy: **97.40%**
-
-### Best Model
-**Multinomial Naive Bayes** achieved the highest performance and was selected as the final model for deployment.
+---
 
 ## Features
-- Text preprocessing using NLTK
-- Stopword removal
-- TF-IDF Vectorization
-- Hyperparameter tuning
-- Model comparison
-- Cross-validation
-- Model serialization using Pickle
-- Interactive command-line prediction system
+
+* Email text preprocessing
+* TF-IDF feature extraction
+* Multiple model comparison
+* Model evaluation using Accuracy, Precision, Recall and F1-Score
+* Cross-validation
+* Flask-based web interface
+* Real-time spam prediction
+
+---
+
+## Technologies Used
+
+* Python
+* Pandas
+* NumPy
+* Scikit-learn
+* NLTK
+* Flask
+* Pickle
+* HTML & CSS
+
+---
+
+## Dataset
+
+Dataset Used:
+SMS Spam Collection Dataset
+
+* Total Messages: 5,572
+* Ham Messages: 4,825
+* Spam Messages: 747
+
+---
+
+## Machine Learning Models Compared
+
+* Naive Bayes
+* Logistic Regression
+* Decision Tree
+* Random Forest
+
+### Model Comparison
+
+| Model               | Accuracy |
+| ------------------- | -------- |
+| Naive Bayes         | 97.76%   |
+| Logistic Regression | 98.03%   |
+| Decision Tree       | 96.14%   |
+| Random Forest       | 98.03%   |
+
+**Best Selected Model:** Logistic Regression
+
+---
 
 ## Project Structure
 
@@ -73,36 +68,92 @@ The project uses the SMS Spam Collection dataset containing **5,572** messages w
 EmailSpamClassifier/
 │
 ├── data/
-│   └── SMSSpamCollection
-│
 ├── models/
-│   ├── spam_model.pkl
-│   └── vectorizer.pkl
-│
 ├── notebooks/
-│
 ├── src/
 │   ├── preprocess.py
 │   ├── feature_extraction.py
 │   ├── model_training.py
-│   ├── evaluation.py
 │   ├── model_comparison.py
-│   ├── spam_classifier.py
-│   └── eda.py
+│   ├── evaluation.py
+│   └── spam_classifier.py
+│
+├── templates/
+│   └── index.html
 │
 ├── app.py
-├── test.py
-└── README.md
+├── README.md
+└── .gitignore
 ```
 
+---
+
+## Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/Prawesh-Rai/email-spam-classifier-.git
+```
+
+Go to the project directory
+
+```bash
+cd email-spam-classifier-
+```
+
+Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the Flask application
+
+```bash
+python app.py
+```
+
+Open your browser and visit
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+## Model Performance
+
+* Best Accuracy: **98.03%**
+* Cross Validation Accuracy: **98.03%**
+* Spam Detection through Flask Web Application
+
+---
+
+## Screenshots
+
+Add screenshots of:
+
+* Home Page
+* Spam Prediction
+* Non-Spam Prediction
+
+---
+
 ## Future Improvements
-- Develop a Flask Web Application
-- Build a Streamlit Dashboard
-- Deploy the model on Render
-- Train using larger email datasets
-- Integrate Deep Learning models such as LSTM and BERT
-- Add REST API support
+
+* Deploy on Render or Railway
+* Improve UI design
+* Add user authentication
+* Support multiple languages
+* Email attachment scanning
+
+---
 
 ## Author
 
 **Prawesh Kumar Rai**
+
+B.Tech CSE (AI & Data Science)
+
+Apeejay Stya University
