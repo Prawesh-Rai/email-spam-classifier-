@@ -1,5 +1,8 @@
+from flask import Flask, render_template, request
 import pickle
 import os
+
+app = Flask(__name__)
 
 # Load model
 model_path = os.path.join("models", "spam_model.pkl")
@@ -11,20 +14,25 @@ vectorizer_path = os.path.join("models", "vectorizer.pkl")
 with open(vectorizer_path, "rb") as file:
     vectorizer = pickle.load(file)
 
-while True:
-    print("\n==============================")
-    email = input("Enter email text (or type 'exit'): ")
 
-    if email.lower() == "exit":
-        break
+@app.route("/", methods=["GET", "POST"])
+def home():
+    prediction = ""
 
-    # Convert text into TF-IDF features
-    email_vector = vectorizer.transform([email])
+    if request.method == "POST":
+        email = request.form["email"]
 
-    # Predict
-    prediction = model.predict(email_vector)
+        email_vector = vectorizer.transform([email])
 
-    if prediction[0] == 1:
-        print("\nPrediction: SPAM")
-    else:
-        print("\nPrediction: NOT SPAM")
+        result = model.predict(email_vector)
+
+        if result[0] == 1:
+            prediction = "SPAM"
+        else:
+            prediction = "NOT SPAM"
+
+    return render_template("index.html", prediction=prediction)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
