@@ -6,6 +6,15 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    confusion_matrix,
+    classification_report
+)
+
 # Dataset path
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -91,4 +100,24 @@ print(round(tuned_accuracy * 100, 2), "%")
 # Compare Results
 print("\nAccuracy Improvement:")
 print(round((tuned_accuracy - default_accuracy) * 100, 2), "%")
+
+# Predictions using tuned model
+y_pred = best_model.predict(X_test)
+
+# Evaluation Metrics
+print("\nEvaluation Metrics")
+print("-------------------")
+
+print("Accuracy :", round(accuracy_score(y_test, y_pred) * 100, 2), "%")
+print("Precision:", round(precision_score(y_test, y_pred) * 100, 2), "%")
+print("Recall   :", round(recall_score(y_test, y_pred) * 100, 2), "%")
+print("F1 Score :", round(f1_score(y_test, y_pred) * 100, 2), "%")
+
+# Confusion Matrix
+print("\nConfusion Matrix")
+print(confusion_matrix(y_test, y_pred))
+
+# Classification Report
+print("\nClassification Report")
+print(classification_report(y_test, y_pred))
 
