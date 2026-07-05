@@ -121,3 +121,33 @@ print(confusion_matrix(y_test, y_pred))
 print("\nClassification Report")
 print(classification_report(y_test, y_pred))
 
+# -----------------------------
+# Error Analysis
+# -----------------------------
+
+print("\n" + "=" * 50)
+print("ERROR ANALYSIS")
+print("=" * 50)
+
+# Convert sparse matrix to DataFrame index mapping
+test_messages = df.iloc[y_test.index]["message"]
+
+# False Positives
+false_positive = (y_test == 0) & (y_pred == 1)
+
+# False Negatives
+false_negative = (y_test == 1) & (y_pred == 0)
+
+print("\nFalse Positives (Ham predicted as Spam):")
+print(false_positive.sum())
+
+for msg in test_messages[false_positive].head(5):
+    print("-" * 50)
+    print(msg)
+
+print("\nFalse Negatives (Spam predicted as Ham):")
+print(false_negative.sum())
+
+for msg in test_messages[false_negative].head(5):
+    print("-" * 50)
+    print(msg)

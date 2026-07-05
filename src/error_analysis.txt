@@ -1,0 +1,33 @@
+EMAIL SPAM CLASSIFIER
+ERROR ANALYSIS REPORT
+
+False Positives:
+- 2 Ham messages classified as Spam.
+- Cause:
+  - Contained words such as "txt", "reply"
+  - Similar wording to spam messages.
+
+False Negatives:
+- 10 Spam messages classified as Ham.
+- Cause:
+  - Natural conversational language.
+  - Few promotional keywords.
+  - Reminder-style messages looked legitimate.
+
+Model Limitations
+-----------------
+1. TF-IDF ignores context.
+2. Short messages are difficult to classify.
+3. Some spam messages resemble genuine SMS.
+4. Limited vocabulary affects prediction.
+
+Possible Improvements
+---------------------
+• Increase training data
+• Better preprocessing
+• Remove stop words
+• Apply stemming or lemmatization
+• Try Support Vector Machine (SVM)
+• Try Random Forest
+• Use XGBoost
+• Use BERT Transformer models
