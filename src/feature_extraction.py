@@ -1,20 +1,35 @@
-import pandas as pd
+"""
+feature_extraction.py
+
+This script performs feature extraction on the SMS Spam Collection dataset.
+
+Features implemented:
+1. Bag of Words (CountVectorizer)
+2. TF-IDF Vectorization
+3. Display extracted vocabulary
+4. Train-Test split on feature matrix
+5. Check missing values
+"""
+
 import os
 import string
-import nltk
 
+import nltk
+import pandas as pd
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import train_test_split
+
+# Download Required Resources
 
 nltk.download("stopwords")
 nltk.download("punkt")
 nltk.download("punkt_tab")
 
-dataset_path = os.path.join(
+# Load Dataset
+
+DATASET_PATH = os.path.join(
     os.path.dirname(__file__),
     "..",
     "data",
@@ -22,45 +37,66 @@ dataset_path = os.path.join(
 )
 
 df = pd.read_csv(
-    dataset_path,
+    DATASET_PATH,
     sep="\t",
     header=None,
     names=["label", "message"]
 )
 
+# Text Preprocessing
+
 df["message"] = df["message"].str.lower()
 
-stop_words = set(stopwords.words("english"))
+STOP_WORDS = set(stopwords.words("english"))
+
 
 def clean_text(text):
+    """
+    Remove punctuation and stopwords.
+
+    Parameters
+    ----------
+    text : str
+
+    Returns
+    -------
+    str
+    """
+
     text = "".join(
-        ch for ch in text
-        if ch not in string.punctuation
+        char
+        for char in text
+        if char not in string.punctuation
     )
 
     words = word_tokenize(text)
 
     words = [
-        word for word in words
-        if word not in stop_words
+        word
+        for word in words
+        if word not in STOP_WORDS
     ]
 
     return " ".join(words)
 
+
 df["message"] = df["message"].apply(clean_text)
 
-# Convert labels to numbers
-df["label"] = df["label"].map({"ham": 0, "spam": 1})
+df["label"] = df["label"].map({
+    "ham": 0,
+    "spam": 1
+})
 
-# Task 1: Bag of Words
+# Task 1 : Bag of Words
 
 bow = CountVectorizer(stop_words="english")
+
 X_bow = bow.fit_transform(df["message"])
 
 print("Bag of Words Shape:")
 print(X_bow.shape)
 
-# Task 2 & 3: TF-IDF + Top 1000 Features
+# Task 2 & 3 : TF-IDF
 
 tfidf = TfidfVectorizer(
     stop_words="english",
@@ -76,7 +112,7 @@ print(X.shape)
 print("\nFirst 20 Features:")
 print(tfidf.get_feature_names_out()[:20])
 
-# Task 4: Train-Test Feature Matrix
+# Task 4 : Train-Test Split
 
 X_train, X_test, y_train, y_test = train_test_split(
     X,
@@ -92,7 +128,7 @@ print(X_train.shape)
 print("\nTesting Shape:")
 print(X_test.shape)
 
-# Task 5: Check Missing Values
+# Task 5 : Missing Values
 
 print("\nMissing Values:")
 print(df.isnull().sum())
