@@ -1,3 +1,13 @@
+"""
+Model Training Script
+
+This script:
+1. Loads and preprocesses the SMS Spam Collection dataset.
+2. Extracts TF-IDF features.
+3. Trains and compares Multinomial Naive Bayes and Logistic Regression.
+4. Saves the best trained model and vectorizer.
+"""
+
 import pandas as pd
 import os
 import string
@@ -11,14 +21,17 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
 
-# Download stopwords
+# Download required NLTK resources
+
 nltk.download("stopwords")
 
-# Dataset path
+# Locate dataset
+
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 dataset_path = os.path.join(base_dir, "data", "SMSSpamCollection")
 
-# Load dataset
+# Load SMS Spam Collection dataset
+
 df = pd.read_csv(
     dataset_path,
     sep="\t",
@@ -26,10 +39,12 @@ df = pd.read_csv(
     names=["label", "message"]
 )
 
-# Convert text to lowercase
+# Basic text preprocessing
+
 df["message"] = df["message"].str.lower()
 
-# Remove punctuation and stopwords
+# Remove punctuation and English stopwords
+
 stop_words = set(stopwords.words("english"))
 
 def clean_text(text):
@@ -49,19 +64,22 @@ def clean_text(text):
 
 df["message"] = df["message"].apply(clean_text)
 
-# Convert labels
+# Encode labels
+
 df["label"] = df["label"].map({
     "ham": 0,
     "spam": 1
 })
 
-# Features
+# TF-IDF feature extraction
+
 vectorizer = TfidfVectorizer(max_features=1000)
 
 X = vectorizer.fit_transform(df["message"])
 y = df["label"]
 
-# Train Test Split
+# Split dataset into training and testing sets
+
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -70,7 +88,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
-# Train Model with Hyperparameter Tuning
+# Train Multinomial Naive Bayes with alpha tuning
 
 alphas = [0.1, 0.5, 1.0, 2.0]
 
@@ -99,7 +117,7 @@ model = MultinomialNB(alpha=best_alpha)
 
 model.fit(X_train, y_train)
 
-# Logistic Regression Comparison
+# Train and evaluate Logistic Regression
 
 print("\n----- Logistic Regression Comparison -----")
 
@@ -122,17 +140,20 @@ if lr_accuracy > best_accuracy:
 else:
     print("Naive Bayes performs better.")
 
-# Save model
+# Create models directory if it does not exist
+
 os.makedirs(
     os.path.join(base_dir, "models"),
     exist_ok=True
 )
 
-# Save model
+# Save trained Naive Bayes model
+
 with open(os.path.join(base_dir, "models", "spam_model.pkl"), "wb") as f:
     pickle.dump(model, f)
 
-# Save TF-IDF vectorizer
+# Save fitted TF-IDF vectorizer
+
 with open(os.path.join(base_dir, "models", "vectorizer.pkl"), "wb") as f:
     pickle.dump(vectorizer, f)
 
