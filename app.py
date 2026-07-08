@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # Load model
-model_path = os.path.join("models", "spam_model.pkl")
+model_path = os.path.join("models", "spam_model_tuned.pkl")
 with open(model_path, "rb") as file:
     model = pickle.load(file)
 

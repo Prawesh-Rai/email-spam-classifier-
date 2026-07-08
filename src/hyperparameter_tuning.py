@@ -13,6 +13,9 @@ This script:
 import os
 import pickle
 import pandas as pd
+import string
+import nltk
+from nltk.corpus import stopwords
 
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -26,6 +29,8 @@ from sklearn.metrics import (
     confusion_matrix,
     classification_report
 )
+
+nltk.download("stopwords")
 
 # Locate dataset
 
@@ -45,6 +50,28 @@ df = pd.read_csv(
     header=None,
     names=["label", "message"]
 )
+
+# Basic text preprocessing
+df["message"] = df["message"].str.lower()
+
+stop_words = set(stopwords.words("english"))
+
+def clean_text(text):
+    text = "".join(
+        char for char in text
+        if char not in string.punctuation
+    )
+
+    words = text.split()
+
+    words = [
+        word for word in words
+        if word not in stop_words
+    ]
+
+    return " ".join(words)
+
+df["message"] = df["message"].apply(clean_text)
 
 # Encode class labels
 
@@ -119,6 +146,14 @@ model_path = os.path.join(base_dir, "models", "spam_model_tuned.pkl")
 
 with open(model_path, "wb") as f:
     pickle.dump(tuned_model, f)
+
+vectorizer_path = os.path.join(base_dir, "models", "vectorizer.pkl")
+
+with open(vectorizer_path, "wb") as f:
+    pickle.dump(vectorizer, f)
+
+print("Vectorizer saved successfully.")
+print("Saved at:", vectorizer_path)
 
 print("\nTuned model saved successfully.")
 print("Saved at:", model_path)
