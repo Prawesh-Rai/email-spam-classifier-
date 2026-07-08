@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import pickle
 import os
+import sqlite3
 
 app = Flask(__name__)
 
@@ -31,8 +32,19 @@ def home():
         else:
             prediction = "NOT SPAM"
 
-    return render_template("index.html", prediction=prediction)
+        # Save prediction into database
+        conn = sqlite3.connect("emails.db")
+        cursor = conn.cursor()
 
+        cursor.execute(
+            "INSERT INTO predictions (email, prediction) VALUES (?, ?)",
+            (email, prediction)
+        )
+
+        conn.commit()
+        conn.close()
+
+    return render_template("index.html", prediction=prediction)
 
 if __name__ == "__main__":
     app.run(debug=True)
