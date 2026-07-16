@@ -1,87 +1,41 @@
-# Email Spam Classifier using Machine Learning
+# 📧 Email Spam Classifier
 
-## Project Overview
-
-This project is a Machine Learning-based Email Spam Classifier developed using Python and Scikit-learn. It classifies SMS and email messages as **Spam** or **Not Spam** using Natural Language Processing (NLP) techniques and a Logistic Regression model with TF-IDF feature extraction. The project also includes hyperparameter tuning, comprehensive model evaluation, error analysis, and a Flask web application for real-time spam prediction.
+An end-to-end Machine Learning project that classifies emails as **Spam** or **Not Spam** using Natural Language Processing (NLP), TF-IDF Vectorization, and Logistic Regression. The project features a Flask web application, SQLite database integration, Docker containerization, and hyperparameter tuning for improved model performance.
 
 ---
 
-## Features
+## 🚀 Features
 
-* Email/SMS text preprocessing
-* TF-IDF feature extraction
-* Multiple Machine Learning model comparison
-* Hyperparameter tuning using GridSearchCV
-* Model evaluation using Accuracy, Precision, Recall and F1-Score
-* Confusion Matrix and Classification Report
-* Error analysis (False Positives & False Negatives)
-* Cross-validation
-* Flask-based web interface
-* Real-time spam prediction
-
----
-
-## Technologies Used
-
-* Python
-* Pandas
-* NumPy
-* Scikit-learn
-* NLTK
-* Flask
-* Pickle
-* HTML & CSS
+- Email Spam Detection using Machine Learning
+- Text Preprocessing and Cleaning
+- TF-IDF Feature Extraction
+- Logistic Regression Classifier
+- Hyperparameter Tuning using GridSearchCV
+- Model Performance Comparison
+- Flask Web Application
+- SQLite Database Integration
+- Docker Containerization
+- Confusion Matrix and Evaluation Metrics
+- Accuracy Comparison Visualization
 
 ---
 
-## Dataset
+## 🛠️ Technologies Used
 
-**Dataset Used:** SMS Spam Collection Dataset
-
-* Total Messages: **5,572**
-* Ham Messages: **4,825**
-* Spam Messages: **747**
-
----
-
-## Machine Learning Models Compared
-
-* Naive Bayes
-* Logistic Regression
-* Decision Tree
-* Random Forest
-
-### Model Comparison
-
-| Model | Accuracy |
-|-------|----------|
-| Naive Bayes | 97.76% |
-| Logistic Regression | 98.03% |
-| Decision Tree | 96.14% |
-| Random Forest | 98.03% |
-
-**Best Selected Model:** Logistic Regression
+- Python
+- Flask
+- Scikit-learn
+- Pandas
+- NumPy
+- SQLite
+- HTML
+- CSS
+- Docker
+- Pickle
 
 ---
 
-## Hyperparameter Tuning
-
-Hyperparameter tuning was performed using **GridSearchCV** to optimize the Logistic Regression model.
-
-### Best Parameters
-
-```text
-C = 10
-Solver = liblinear
-```
-
-### Cross Validation Accuracy
-
-**98.16%**
-
----
-
-## Project Structure
+## 📂 Project Structure
 
 ```text
 EmailSpamClassifier/
@@ -89,161 +43,168 @@ EmailSpamClassifier/
 ├── data/
 ├── models/
 │   ├── spam_model.pkl
+│   ├── spam_model_tuned.pkl
 │   └── vectorizer.pkl
 │
 ├── notebooks/
+│
+├── screenshots/
+│   ├── home_page.png
+│   ├── spam_prediction.png
+│   ├── not_spam_prediction.png
+│   ├── docker_running.png
+│   └── database_output.png
 │
 ├── src/
 │   ├── preprocess.py
 │   ├── feature_extraction.py
 │   ├── model_training.py
-│   ├── model_comparison.py
 │   ├── hyperparameter_tuning.py
+│   ├── model_comparison.py
 │   ├── evaluation.py
-│   ├── spam_classifier.py
-│   └── error_analysis.txt
+│   ├── visualization.py
+│   └── spam_classifier.py
 │
 ├── templates/
 │   └── index.html
 │
 ├── app.py
+├── database.py
+├── view_database.py
+├── Dockerfile
+├── requirements.txt
+├── emails.db
 ├── README.md
 └── .gitignore
 ```
 
 ---
 
-## Installation
+## ⚙️ Installation
 
-Clone the repository
-
-```bash
-git clone https://github.com/Prawesh-Rai/email-spam-classifier-.git
-```
-
-Go to the project directory
+### 1. Clone the Repository
 
 ```bash
-cd email-spam-classifier-
+git clone https://github.com/Prawesh-Rai/email-spam-classifier-
 ```
 
-Install dependencies
+### 2. Navigate to the Project Folder
+
+```bash
+cd EmailSpamClassifier
+```
+
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the Flask application
+### 4. Run the Application
 
 ```bash
 python app.py
 ```
 
-Open your browser and visit
+### 5. Open in Browser
 
-```text
+```
 http://127.0.0.1:5000
 ```
 
 ---
 
-## Model Performance
+## 🐳 Docker
 
-### Before Hyperparameter Tuning
+### Build Docker Image
 
-* Accuracy: **97.85%**
+```bash
+docker build -t email-spam-classifier .
+```
 
-### After Hyperparameter Tuning
+### Run Docker Container
 
-* Accuracy: **98.92%**
-* Precision: **98.58%**
-* Recall: **93.29%**
-* F1-Score: **95.86%**
+```bash
+docker run --rm -p 5000:5000 email-spam-classifier
+```
 
-### Accuracy Improvement
+### Access the Application
 
-* **97.85% → 98.92%**
-* **Improvement: +1.08%**
-
----
-
-## Error Analysis
-
-### False Positives
-
-* **2** Ham messages classified as Spam.
-
-### False Negatives
-
-* **10** Spam messages classified as Ham.
-
-### Observations
-
-* Some conversational spam messages resemble normal messages.
-* Reminder-style spam messages appear similar to legitimate notifications.
-* TF-IDF relies on word frequency and cannot fully understand message context.
-
-### Possible Improvements
-
-* Increase training dataset
-* Better text preprocessing
-* Stemming and Lemmatization
-* Support Vector Machine (SVM)
-* Random Forest optimization
-* XGBoost
-* BERT Transformer Model
-
----
-
-## Screenshots
-
-Add screenshots of:
-
-* Home Page
-* Spam Prediction
-* Non-Spam Prediction
-* Model Evaluation Output
-
----
-
-## Live Demo
-
-Deployment Link:
-
-```text
-Will be added after deployment (Week 5 Friday)
+```
+http://localhost:5000
 ```
 
 ---
 
-## Demo Video
+## 📊 Model Performance
 
-Video Link:
+The project uses:
 
-```text
-Will be added after project completion
-```
-
----
-
-## Future Improvements
-
-* Deploy on Render or Railway
-* Improve UI design
-* Add user authentication
-* Support multiple languages
-* Email attachment scanning
-* REST API support
-* Deep Learning-based spam detection
+- TF-IDF Vectorization
+- Logistic Regression Classifier
+- Hyperparameter Tuning (GridSearchCV)
+- Accuracy Evaluation
+- Confusion Matrix
+- Model Comparison
+- Precision, Recall and F1-Score
 
 ---
 
-## Author
+## 📸 Project Screenshots
+
+### 🏠 Home Page
+
+![Home Page](screenshots/home_page.png)
+
+---
+
+### 🚫 Spam Prediction
+
+![Spam Prediction](screenshots/spam_prediction.png)
+
+---
+
+### ✅ Not Spam Prediction
+
+![Not Spam Prediction](screenshots/not_spam_prediction.png)
+
+---
+
+### 🐳 Docker Container Running
+
+![Docker Running](screenshots/docker_running.png)
+
+---
+
+### 🗄️ SQLite Database Output
+
+![Database Output](screenshots/database_output.png)
+
+---
+
+## 🔮 Future Improvements
+
+- Deep Learning based Spam Detection
+- Email Attachment Analysis
+- User Authentication
+- REST API Integration
+- Deployment on Render or Railway
+- Cloud Database Integration
+- Email Inbox Integration
+- Improved UI Design
+
+---
+
+## 👨‍💻 Author
 
 **Prawesh Kumar Rai**
 
-B.Tech CSE (AI & Data Science)
+B.Tech Computer Science Engineering (Artificial Intelligence & Data Science)
 
 Apeejay Stya University
 
 GitHub: https://github.com/Prawesh-Rai
+
+---
+
+## ⭐ If you found this project useful, consider giving it a star on GitHub!
